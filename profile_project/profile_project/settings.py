@@ -122,4 +122,4 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-AUTH_USER_MODEL = 'peofile_app.UserProfile'
+AUTH_USER_MODEL = 'profile_app.UserProfile'
