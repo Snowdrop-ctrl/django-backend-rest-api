@@ -3,8 +3,12 @@ from rest_framework.response import Response
 from rest_framework import authentication, permissions
 from rest_framework import status
 from rest_framework import viewsets
+from rest_framework.authentication import TokenAuthentication
+from rest_framework import filters
 
+from profile_app import models
 from profile_app import serializers
+from profile_app import permissions
 
 
 class helloview(APIView):
@@ -77,3 +81,15 @@ class Helloviewset(viewsets.ViewSet):
 
     def destroy(self, request, pk=None):
         return Response({'massage':'distroy'})
+
+
+
+class UserProfileViewset(viewsets.ModelViewSet):
+    serializer_class = serializers.UserProfileSerializer
+    queryset = models.UserProfile.objects.all()
+
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (permissions.UpdateOwnProfile,)
+
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ('name','email',)
